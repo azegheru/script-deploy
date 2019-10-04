@@ -21,8 +21,8 @@ deploy:
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ ubuntu@129.213.108.56:/home/ubuntu/client
 
 after_deploy:  
-- cd /home/ubuntu/client
-- docker build -t azegheru/script-deploy-prod .
-- docker run azegheru/script-deploy-prod:latest
+- ssh ubuntu@129.213.108.56 'cd /home/ubuntu/client'
+- ssh ubuntu@129.213.108.56 'docker build -t azegheru/script-deploy-prod .'
+- ssh ubuntu@129.213.108.56 'docker run azegheru/script-deploy-prod:latest'
 on:
   branch: master
