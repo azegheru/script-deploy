@@ -23,9 +23,8 @@ script:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ ubuntu@129.213.108.56:/home/ubuntu/client
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ ubuntu@132.145.205.228:/home/ubuntu/client
-
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ ubuntu@129.213.108.56:/home/ubuntu/client
   #deploy:
   #- provider: script
   #skip_cleanup: true
