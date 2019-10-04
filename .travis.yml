@@ -28,7 +28,7 @@ deploy:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: rsync -r delete-after --quiet $TRAVIS_BUILD_DIR/ ubuntu@132.145.205.228:/home/ubuntu/client
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ ubuntu@132.145.205.228:/home/ubuntu/client
 
 after_deploy:
 - ssh ubuntu@129.213.108.56 'sudo docker stop $(sudo docker ps -q)' 
