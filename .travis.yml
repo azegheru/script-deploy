@@ -1,4 +1,6 @@
 sudo: required
+addons:
+  ssh_known_hosts: 129.213.108.56
 services:
 - docker
 
@@ -6,25 +8,24 @@ before_install:
 - docker build -t azegheru/script-deploy -f Dockerfile.dev .
 
 before_deploy:
-- openssl aes-256-cbc -K $encrypted_2be2c668a9e0_key -iv $encrypted_2be2c668a9e0_iv -in deploy_rsa.enc -out deploy_rsa -d
+- openssl aes-256-cbc -K $encrypted_2be2c668a9e0_key -iv $encrypted_2be2c668a9e0_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
 - eval "$(ssh-agent -s)"
 - chmod 600 /tmp/deploy_rsa
 - ssh-add /tmp/deploy_rsa
-
 script:
 - docker run -e CI=true azegheru/script-deploy npm run test
-
 deploy:
-  - provider: script
-    skip_cleanup: true
-    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/public ubuntu@129.213.108.56:/home/ubuntu/client
-  - provider: script
-    skip_cleanup: true
-    script: npm run deploy
-    on:
-      branch: master
-  - provider: script
-    skip_cleanup: true
-    script: npm run index-content
-    on: 
-      branch: master
+- provider: script
+  skip_cleanup: true
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/public ubuntu@129.213.108.56:/home/ubuntu/client
+- provider: script
+  skip_cleanup: true
+  script: npm run deploy
+  on:
+    branch: master
+- provider: script
+  skip_cleanup: true
+  script: npm run index-content
+  on:
+    branch: master
