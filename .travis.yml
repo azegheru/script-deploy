@@ -23,6 +23,6 @@ deploy:
 after_deploy:  
 - cd /home/ubuntu/client
 - docker build -t azegheru/script-deploy-prod .
-- docker run azegheru/script-deloy-prod:latest
+- docker run azegheru/script-deploy-prod:latest
 on:
   branch: master
