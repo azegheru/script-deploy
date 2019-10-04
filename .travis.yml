@@ -9,7 +9,7 @@ before_install:
 
 before_deploy:
 - openssl aes-256-cbc -K $encrypted_2be2c668a9e0_key -iv $encrypted_2be2c668a9e0_iv
-  -in id_rsa.enc -out id_rsa -d
+  -in id_rsa.enc -out /tmp/id_rsa -d
 - eval "$(ssh-agent -s)"
 - chmod 600 /tmp/id_rsa
 - ssh-add /tmp/id_rsa
