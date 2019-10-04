@@ -7,9 +7,9 @@ before_deploy:
 - eval "$(ssh-agent -s)"
 - chmod 600 /tmp/deploy_rsa
 - ssh-add /tmp/deploy_rsa
-- docker build -t azegheru/docker-react -f Dockerfile.dev .
+- docker build -t azegheru/script-deploy -f Dockerfile.dev .
 script:
-- docker run -e CI=true azegheru/docker-react npm run test
+- docker run -e CI=true azegheru/script-deploy npm run test
 
 deploy:
   - provider: script
