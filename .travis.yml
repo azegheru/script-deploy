@@ -20,8 +20,9 @@ deploy:
   skip_cleanup: true
   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ ubuntu@129.213.108.56:/home/ubuntu/client
 
-after_deploy: 
+after_deploy:
+- ssh ubuntu@129.213.108.56 'sudo docker stop $(docker ps -q)' 
 - ssh ubuntu@129.213.108.56 'cd /home/ubuntu/client && sudo docker build -t azegheru/script-deploy-prod -f /home/ubuntu/client/Dockerfile .'
-- ssh ubuntu@129.213.108.56 'sudo docker run azegheru/script-deploy-prod:latest'
+- ssh ubuntu@129.213.108.56 'sudo docker run -p 80:80 azegheru/script-deploy-prod:latest'
 on:
   branch: master
