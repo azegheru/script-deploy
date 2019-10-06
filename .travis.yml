@@ -21,9 +21,14 @@ script:
 - docker run -e CI=true azegheru/script-deploy npm run test
 
 deploy:
-- provider: script
-  skip_cleanup: true
-  script: deploy.sh
+ - provider: script
+   skip_cleanup: true
+   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ ubuntu@132.145.157.13:/home/ubuntu/client
+ - provider: script
+   skip_cleanup: true
+   script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/ ubuntu@132.145.201.9:/home/ubuntu/client
+
+
 after_deploy:
 - ssh ubuntu@132.145.201.9 'sudo apt install -y docker.io'
 - ssh ubuntu@132.145.201.9 'sudo docker stop $(sudo docker ps -q)' 
